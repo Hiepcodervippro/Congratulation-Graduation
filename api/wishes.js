@@ -21,8 +21,12 @@ export default async function handler(req, res) {
     const app = await getApp();
     return app(req, res);
   } catch (error) {
-    console.error("API initialization failed:", error);
-
+console.error("API initialization failed:", {
+  code: error.code,
+  message: error.message,
+  errno: error.errno,
+  syscall: error.syscall,
+});
     if (!res.headersSent) {
       return res.status(500).json({
         error: "Không thể kết nối cơ sở dữ liệu.",
